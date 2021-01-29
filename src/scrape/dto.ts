@@ -7,7 +7,8 @@ export interface Platforms {
 export interface Release {
     name: string,
     downloads: Platforms,
-    updates: Platforms
+    updates: Platforms,
+    latest: Platforms
 }
 
 export interface Globals {
@@ -33,3 +34,4 @@ export enum IssueState {
     Closed = 'closed',
     All = 'all'
 }
+

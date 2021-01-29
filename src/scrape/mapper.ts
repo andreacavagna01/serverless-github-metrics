@@ -13,22 +13,31 @@ export function map_releases(releases: ReposListReleasesResponseData) {
         let downloads_mac_count = 0
         let downloads_win_count = 0
         let downloads_linux_count = 0
+        let latestMac = 0;
+        let latestWindows = 0;
+        let latestLinux = 0
 
         for (let asset of release.assets) {
-            if (endsWithAny(['mac.zip', 'dmg'], asset.name)) {
+            if (endsWithAny(['dmg'], asset.name)) {
                 downloads_mac_count += asset.download_count
             } else if (asset.name.endsWith('exe')) {
                 downloads_win_count += asset.download_count
-            } else if (asset.name.endsWith('deb')) {
+            } else if ((asset.name.endsWith('deb')) || (asset.name.endsWith('AppImage'))) {
                 downloads_linux_count += asset.download_count
             }
 
             if (asset.name === 'latest-mac.yml') {
-                update_mac_count += asset.download_count
+                latestMac += asset.download_count
             } else if (asset.name === 'latest.yml') {
-                update_win_count += asset.download_count
+                latestWindows += asset.download_count
             } else if (asset.name === 'latest-linux.yml') {
-                update_linux_count += asset.download_count
+                latestLinux += asset.download_count
+            }
+
+            if (endsWithAny(['mac.zip'], asset.name)) {
+                update_mac_count += asset.download_count
+            } else if (endsWithAny(['exe.blockmap'], asset.name)) {
+                update_win_count += asset.download_count
             }
         }
 
@@ -44,7 +53,14 @@ export function map_releases(releases: ReposListReleasesResponseData) {
             linux: update_linux_count
         }
 
+        const latest: Platforms = {
+            linux: latestLinux,
+            mac: latestMac,
+            win: latestWindows
+        }
+
         const t: Release = {
+            latest: latest,
             name: release.name,
             downloads: download,
             updates: update

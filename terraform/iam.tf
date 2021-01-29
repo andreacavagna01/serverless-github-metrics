@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "lambda_document" {
       "dynamodb:PutItem"
     ]
 
-    resources = [ aws_dynamodb_table.dynamodb_table.arn ]
+    resources = [ aws_dynamodb_table.dynamodb_table.arn, aws_dynamodb_table.dynamodb_table_releseas.arn ]
   }
 }
 
