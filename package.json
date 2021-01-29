@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "script:build-layer": "./scripts/build-layer.sh",
+    "script:build-website": "./scripts/build-website.sh",
     "script:build-function": "tsc; ./scripts/build-lambda.sh",
     "compile": "tsc"
   },
